@@ -11,10 +11,30 @@ This tutorial may be useful (https://github.com/hadley/httr/blob/master/demo/oau
 
 Code:
 ```{r}
-plot(cars)
+library(httr)
+library(httpuv)
+
+oauth_endpoint("github")
+
+# This includes appname, key and secret
+myapp <- oauth_app("My Test App", 
+                   key = "3a7ac605d6a25230b6f5",
+                   secret = "199c831117651d200e9d5f505eec7499c92c03fe"
+                   )
+
+## Get OAuth credentials
+github_token <- oauth2.0_token(oauth_endpoints("github"), myapp)
+
+## Use the API
+gtoken <- config(token = github_token)
+req <- GET("https://api.github.com/users/jtleek/repos", gtoken)
+stop_for_status(req)
+content(req)
+
+
 ```
 
-Answer: 
+Answer: 2017-11-20T18:33:29Z
 
 Question 2:
 
