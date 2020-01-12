@@ -1755,12 +1755,34 @@ summary {
 <p>Code:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
-<pre class="r"><code>plot(cars)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShodHRyKVxubGlicmFyeShodHRwdXYpXG5cbiMjb2F1dGhfZW5kcG9pbnQoXCJnaXRodWJcIilcblxuIyBUaGlzIGluY2x1ZGVzIGFwcG5hbWUsIGtleSBhbmQgc2VjcmV0XG5teWFwcCA8LSBvYXV0aF9hcHAoXCJNeSBUZXN0IEFwcFwiLCBcbiAgICAgICAgICAgICAgICAgICBrZXkgPSBcIjNhN2FjNjA1ZDZhMjUyMzBiNmY1XCIsXG4gICAgICAgICAgICAgICAgICAgc2VjcmV0ID0gXCIxOTljODMxMTE3NjUxZDIwMGU5ZDVmNTA1ZWVjNzQ5OWM5MmMwM2ZlXCJcbiAgICAgICAgICAgICAgICAgICApXG5cbiMjIEdldCBPQXV0aCBjcmVkZW50aWFsc1xuZ2l0aHViX3Rva2VuIDwtIG9hdXRoMi4wX3Rva2VuKG9hdXRoX2VuZHBvaW50cyhcImdpdGh1YlwiKSwgbXlhcHApXG5cbiMjIFVzZSB0aGUgQVBJXG5ndG9rZW4gPC0gY29uZmlnKHRva2VuID0gZ2l0aHViX3Rva2VuKVxucmVxIDwtIEdFVChcImh0dHBzOi8vYXBpLmdpdGh1Yi5jb20vdXNlcnMvanRsZWVrL3JlcG9zXCIsIGd0b2tlbilcbnN0b3BfZm9yX3N0YXR1cyhyZXEpXG54bWxjb250ZW5jdCA8LSBjb250ZW50KHJlcSlcblxuZGF0YXNoYXJlIDwtIHdoaWNoKHNhcHBseShvdXRwdXQsIEZVTj1mdW5jdGlvbihYKSBcImRhdGFzaGFyaW5nXCIgJWluJSBYKSlcbmRcblxuYGBgIn0= -->
+<pre class="r"><code>library(httr)
+library(httpuv)
+
+##oauth_endpoint(&quot;github&quot;)
+
+# This includes appname, key and secret
+myapp &lt;- oauth_app(&quot;My Test App&quot;, 
+                   key = &quot;3a7ac605d6a25230b6f5&quot;,
+                   secret = &quot;199c831117651d200e9d5f505eec7499c92c03fe&quot;
+                   )
+
+## Get OAuth credentials
+github_token &lt;- oauth2.0_token(oauth_endpoints(&quot;github&quot;), myapp)
+
+## Use the API
+gtoken &lt;- config(token = github_token)
+req &lt;- GET(&quot;https://api.github.com/users/jtleek/repos&quot;, gtoken)
+stop_for_status(req)
+xmlcontenct &lt;- content(req)
+
+datashare &lt;- which(sapply(output, FUN=function(X) &quot;datasharing&quot; %in% X))
+d
+</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Answer:</p>
+<p>Answer: 2013-11-07T13:25:07Z</p>
 <p>Question 2:</p>
 <p>The sqldf package allows for execution of SQL commands on R data frames. We will use the sqldf package to practice the queries we might send with the dbSendQuery command in RMySQL.</p>
 <p>Download the American Community Survey data and load it into an R object called</p>
@@ -1773,16 +1795,28 @@ summary {
 <!-- rnb-text-begin -->
 <p><a href="https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv" class="uri">https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv</a></p>
 <p>Which of the following commands will select only the data for the probability weights pwgtp1 with ages less than 50?</p>
-<p>Answer:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBpbnN0YWxsLnBhY2thZ2VzKFwic3FsZGZcIilcbmxpYnJhcnkoXCJzcWxkZlwiKVxuXG51cmwgPC0gXCJodHRwczovL2QzOTZxdXN6YTQwb3JjLmNsb3VkZnJvbnQubmV0L2dldGRhdGElMkZkYXRhJTJGc3MwNnBpZC5jc3ZcIlxuZiA8LSBmaWxlLnBhdGgoZ2V0d2QoKSwgXCJzczA2cGlkLmNzdlwiKVxuZG93bmxvYWQuZmlsZSh1cmwsIGYpXG5hY3MgPC0gZGF0YS50YWJsZTo6ZGF0YS50YWJsZShyZWFkLmNzdihmKSlcbmBgYCJ9 -->
+<pre class="r"><code># install.packages(&quot;sqldf&quot;)
+library(&quot;sqldf&quot;)
+
+url &lt;- &quot;https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv&quot;
+f &lt;- file.path(getwd(), &quot;ss06pid.csv&quot;)
+download.file(url, f)
+acs &lt;- data.table::data.table(read.csv(f))</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Answer: query1 &lt;- sqldf(“select pwgtp1 from acs where AGEP &lt; 50”)</p>
 <p>Question 3:</p>
 <p>Using the same data frame you created in the previous problem, what is the equivalent function to unique(acs$AGEP)</p>
 <p>Answer:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3FsZGYoXCJzZWxlY3QgZGlzdGluY3QgQUdFUCBmcm9tIGFjc1wiKVxuYGBgIn0= -->
+<pre class="r"><code>sqldf(&quot;select distinct AGEP from acs&quot;)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Question 4:</p>
@@ -1792,8 +1826,15 @@ summary {
 <p>Answer:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudXJsIDwtIHVybChcImh0dHA6Ly9iaW9zdGF0Lmpoc3BoLmVkdS9+amxlZWsvY29udGFjdC5odG1sXCIpXG5odG1sQ29kZSA8LSByZWFkTGluZXModXJsKVxuY2xvc2UodXJsKVxuYyhuY2hhcihodG1sQ29kZVsxMF0pLCBuY2hhcihodG1sQ29kZVsyMF0pLCBuY2hhcihodG1sQ29kZVszMF0pLCBuY2hhcihodG1sQ29kZVsxMDBdKSlcbmBgYCJ9 -->
+<pre class="r"><code>url &lt;- url(&quot;http://biostat.jhsph.edu/~jleek/contact.html&quot;)
+htmlCode &lt;- readLines(url)
+close(url)
+c(nchar(htmlCode[10]), nchar(htmlCode[20]), nchar(htmlCode[30]), nchar(htmlCode[100]))</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Answer: 45 31 7 25</p>
 <p>Question 5:</p>
 <p>Read this data set into R and report the sum of the numbers in the fourth of the nine columns.</p>
 <p><a href="https://d396qusza40orc.cloudfront.net/getdata%2Fwksst8110.for" class="uri">https://d396qusza40orc.cloudfront.net/getdata%2Fwksst8110.for</a></p>
@@ -1802,12 +1843,24 @@ summary {
 <p>Code:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudXJsIDwtIFwiaHR0cHM6Ly9kMzk2cXVzemE0MG9yYy5jbG91ZGZyb250Lm5ldC9nZXRkYXRhJTJGd2tzc3Q4MTEwLmZvclwiXG5saW5lcyA8LSByZWFkTGluZXModXJsLCBuID0gMTApXG53IDwtIGMoMSwgOSwgNSwgNCwgMSwgMywgNSwgNCwgMSwgMywgNSwgNCwgMSwgMywgNSwgNCwgMSwgMylcbmNvbE5hbWVzIDwtIGMoXCJmaWxsZXJcIiwgXCJ3ZWVrXCIsIFwiZmlsbGVyXCIsIFwic3N0TmlubzEyXCIsIFwiZmlsbGVyXCIsIFwic3N0YU5pbm8xMlwiLCBcbiAgICAgICAgICAgICAgXCJmaWxsZXJcIiwgXCJzc3ROaW5vM1wiLCBcImZpbGxlclwiLCBcInNzdGFOaW5vM1wiLCBcImZpbGxlclwiLCBcInNzdE5pbm8zNFwiLCBcImZpbGxlclwiLCBcbiAgICAgICAgICAgICAgXCJzc3RhTmlubzM0XCIsIFwiZmlsbGVyXCIsIFwic3N0TmlubzRcIiwgXCJmaWxsZXJcIiwgXCJzc3RhTmlubzRcIilcbmQgPC0gcmVhZC5md2YodXJsLCB3LCBoZWFkZXIgPSBGQUxTRSwgc2tpcCA9IDQsIGNvbC5uYW1lcyA9IGNvbE5hbWVzKVxuZCA8LSBkWywgZ3JlcChcIl5bXmZpbGxlcl1cIiwgbmFtZXMoZCkpXVxuc3VtKGRbLCA0XSlcblxuYGBgIn0= -->
+<pre class="r"><code>url &lt;- &quot;https://d396qusza40orc.cloudfront.net/getdata%2Fwksst8110.for&quot;
+lines &lt;- readLines(url, n = 10)
+w &lt;- c(1, 9, 5, 4, 1, 3, 5, 4, 1, 3, 5, 4, 1, 3, 5, 4, 1, 3)
+colNames &lt;- c(&quot;filler&quot;, &quot;week&quot;, &quot;filler&quot;, &quot;sstNino12&quot;, &quot;filler&quot;, &quot;sstaNino12&quot;, 
+              &quot;filler&quot;, &quot;sstNino3&quot;, &quot;filler&quot;, &quot;sstaNino3&quot;, &quot;filler&quot;, &quot;sstNino34&quot;, &quot;filler&quot;, 
+              &quot;sstaNino34&quot;, &quot;filler&quot;, &quot;sstNino4&quot;, &quot;filler&quot;, &quot;sstaNino4&quot;)
+d &lt;- read.fwf(url, w, header = FALSE, skip = 4, col.names = colNames)
+d &lt;- d[, grep(&quot;^[^filler]&quot;, names(d))]
+sum(d[, 4])
+</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Answer:</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdldHRpbmcgYW5kIENsZWFuaW5nIERhdGEgUXVpeiAyIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KUXVlc3Rpb24gMToNCg0KUmVnaXN0ZXIgYW4gYXBwbGljYXRpb24gd2l0aCB0aGUgR2l0aHViIEFQSSBoZXJlIGh0dHBzOi8vZ2l0aHViLmNvbS9zZXR0aW5ncy9hcHBsaWNhdGlvbnMuIEFjY2VzcyB0aGUgQVBJIHRvIGdldCBpbmZvcm1hdGlvbiBvbiB5b3VyIGluc3RydWN0b3JzIHJlcG9zaXRvcmllcyAoaGludDogdGhpcyBpcyB0aGUgdXJsIHlvdSB3YW50ICJodHRwczovL2FwaS5naXRodWIuY29tL3VzZXJzL2p0bGVlay9yZXBvcyIpLiBVc2UgdGhpcyBkYXRhIHRvIGZpbmQgdGhlIHRpbWUgdGhhdCB0aGUgZGF0YXNoYXJpbmcgcmVwbyB3YXMgY3JlYXRlZC4gV2hhdCB0aW1lIHdhcyBpdCBjcmVhdGVkPw0KDQpUaGlzIHR1dG9yaWFsIG1heSBiZSB1c2VmdWwgKGh0dHBzOi8vZ2l0aHViLmNvbS9oYWRsZXkvaHR0ci9ibG9iL21hc3Rlci9kZW1vL29hdXRoMi1naXRodWIucikuIFlvdSBtYXkgYWxzbyBuZWVkIHRvIHJ1biB0aGUgY29kZSBpbiB0aGUgYmFzZSBSIHBhY2thZ2UgYW5kIG5vdCBSIHN0dWRpby4NCg0KQ29kZToNCmBgYHtyfQ0KcGxvdChjYXJzKQ0KYGBgDQoNCkFuc3dlcjogDQoNClF1ZXN0aW9uIDI6DQoNClRoZSBzcWxkZiBwYWNrYWdlIGFsbG93cyBmb3IgZXhlY3V0aW9uIG9mIFNRTCBjb21tYW5kcyBvbiBSIGRhdGEgZnJhbWVzLiBXZSB3aWxsIHVzZSB0aGUgc3FsZGYgcGFja2FnZSB0byBwcmFjdGljZSB0aGUgcXVlcmllcyB3ZSBtaWdodCBzZW5kIHdpdGggdGhlIGRiU2VuZFF1ZXJ5IGNvbW1hbmQgaW4gUk15U1FMLg0KDQpEb3dubG9hZCB0aGUgQW1lcmljYW4gQ29tbXVuaXR5IFN1cnZleSBkYXRhIGFuZCBsb2FkIGl0IGludG8gYW4gUiBvYmplY3QgY2FsbGVkDQoNCmBgYHtyfQ0KYWNzDQpgYGANCg0KDQpodHRwczovL2QzOTZxdXN6YTQwb3JjLmNsb3VkZnJvbnQubmV0L2dldGRhdGElMkZkYXRhJTJGc3MwNnBpZC5jc3YNCg0KV2hpY2ggb2YgdGhlIGZvbGxvd2luZyBjb21tYW5kcyB3aWxsIHNlbGVjdCBvbmx5IHRoZSBkYXRhIGZvciB0aGUgcHJvYmFiaWxpdHkgd2VpZ2h0cyBwd2d0cDEgd2l0aCBhZ2VzIGxlc3MgdGhhbiA1MD8NCg0KQW5zd2VyOg0KYGBge3J9DQoNCmBgYA0KDQoNClF1ZXN0aW9uIDM6DQoNClVzaW5nIHRoZSBzYW1lIGRhdGEgZnJhbWUgeW91IGNyZWF0ZWQgaW4gdGhlIHByZXZpb3VzIHByb2JsZW0sIHdoYXQgaXMgdGhlIGVxdWl2YWxlbnQgZnVuY3Rpb24gdG8gdW5pcXVlKGFjcyRBR0VQKQ0KDQpBbnN3ZXI6DQpgYGB7cn0NCg0KYGBgDQoNClF1ZXN0aW9uIDQ6DQoNCkhvdyBtYW55IGNoYXJhY3RlcnMgYXJlIGluIHRoZSAxMHRoLCAyMHRoLCAzMHRoIGFuZCAxMDB0aCBsaW5lcyBvZiBIVE1MIGZyb20gdGhpcyBwYWdlOg0KDQpodHRwOi8vYmlvc3RhdC5qaHNwaC5lZHUvfmpsZWVrL2NvbnRhY3QuaHRtbA0KDQooSGludDogdGhlIG5jaGFyKCkgZnVuY3Rpb24gaW4gUiBtYXkgYmUgaGVscGZ1bCkNCg0KQW5zd2VyOg0KYGBge3J9DQoNCmBgYA0KDQpRdWVzdGlvbiA1Og0KDQpSZWFkIHRoaXMgZGF0YSBzZXQgaW50byBSIGFuZCByZXBvcnQgdGhlIHN1bSBvZiB0aGUgbnVtYmVycyBpbiB0aGUgZm91cnRoIG9mIHRoZSBuaW5lIGNvbHVtbnMuDQoNCmh0dHBzOi8vZDM5NnF1c3phNDBvcmMuY2xvdWRmcm9udC5uZXQvZ2V0ZGF0YSUyRndrc3N0ODExMC5mb3INCg0KT3JpZ2luYWwgc291cmNlIG9mIHRoZSBkYXRhOiBodHRwOi8vd3d3LmNwYy5uY2VwLm5vYWEuZ292L2RhdGEvaW5kaWNlcy93a3NzdDgxMTAuZm9yDQoNCihIaW50IHRoaXMgaXMgYSBmaXhlZCB3aWR0aCBmaWxlIGZvcm1hdCkNCg0KQ29kZToNCmBgYHtyfQ0KDQpgYGANCg0KQW5zd2VyOg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdldHRpbmcgYW5kIENsZWFuaW5nIERhdGEgUXVpeiAyIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KUXVlc3Rpb24gMToNCg0KUmVnaXN0ZXIgYW4gYXBwbGljYXRpb24gd2l0aCB0aGUgR2l0aHViIEFQSSBoZXJlIGh0dHBzOi8vZ2l0aHViLmNvbS9zZXR0aW5ncy9hcHBsaWNhdGlvbnMuIEFjY2VzcyB0aGUgQVBJIHRvIGdldCBpbmZvcm1hdGlvbiBvbiB5b3VyIGluc3RydWN0b3JzIHJlcG9zaXRvcmllcyAoaGludDogdGhpcyBpcyB0aGUgdXJsIHlvdSB3YW50ICJodHRwczovL2FwaS5naXRodWIuY29tL3VzZXJzL2p0bGVlay9yZXBvcyIpLiBVc2UgdGhpcyBkYXRhIHRvIGZpbmQgdGhlIHRpbWUgdGhhdCB0aGUgZGF0YXNoYXJpbmcgcmVwbyB3YXMgY3JlYXRlZC4gV2hhdCB0aW1lIHdhcyBpdCBjcmVhdGVkPw0KDQpUaGlzIHR1dG9yaWFsIG1heSBiZSB1c2VmdWwgKGh0dHBzOi8vZ2l0aHViLmNvbS9oYWRsZXkvaHR0ci9ibG9iL21hc3Rlci9kZW1vL29hdXRoMi1naXRodWIucikuIFlvdSBtYXkgYWxzbyBuZWVkIHRvIHJ1biB0aGUgY29kZSBpbiB0aGUgYmFzZSBSIHBhY2thZ2UgYW5kIG5vdCBSIHN0dWRpby4NCg0KQ29kZToNCmBgYHtyfQ0KbGlicmFyeShodHRyKQ0KbGlicmFyeShodHRwdXYpDQoNCiMjb2F1dGhfZW5kcG9pbnQoImdpdGh1YiIpDQoNCiMgVGhpcyBpbmNsdWRlcyBhcHBuYW1lLCBrZXkgYW5kIHNlY3JldA0KbXlhcHAgPC0gb2F1dGhfYXBwKCJNeSBUZXN0IEFwcCIsIA0KICAgICAgICAgICAgICAgICAgIGtleSA9ICIzYTdhYzYwNWQ2YTI1MjMwYjZmNSIsDQogICAgICAgICAgICAgICAgICAgc2VjcmV0ID0gIjE5OWM4MzExMTc2NTFkMjAwZTlkNWY1MDVlZWM3NDk5YzkyYzAzZmUiDQogICAgICAgICAgICAgICAgICAgKQ0KDQojIyBHZXQgT0F1dGggY3JlZGVudGlhbHMNCmdpdGh1Yl90b2tlbiA8LSBvYXV0aDIuMF90b2tlbihvYXV0aF9lbmRwb2ludHMoImdpdGh1YiIpLCBteWFwcCkNCg0KIyMgVXNlIHRoZSBBUEkNCmd0b2tlbiA8LSBjb25maWcodG9rZW4gPSBnaXRodWJfdG9rZW4pDQpyZXEgPC0gR0VUKCJodHRwczovL2FwaS5naXRodWIuY29tL3VzZXJzL2p0bGVlay9yZXBvcyIsIGd0b2tlbikNCnN0b3BfZm9yX3N0YXR1cyhyZXEpDQp4bWxjb250ZW5jdCA8LSBjb250ZW50KHJlcSkNCg0KZGF0YXNoYXJlIDwtIHdoaWNoKHNhcHBseShvdXRwdXQsIEZVTj1mdW5jdGlvbihYKSAiZGF0YXNoYXJpbmciICVpbiUgWCkpDQpkDQoNCmBgYA0KDQpBbnN3ZXI6IDIwMTMtMTEtMDdUMTM6MjU6MDdaDQoNClF1ZXN0aW9uIDI6DQoNClRoZSBzcWxkZiBwYWNrYWdlIGFsbG93cyBmb3IgZXhlY3V0aW9uIG9mIFNRTCBjb21tYW5kcyBvbiBSIGRhdGEgZnJhbWVzLiBXZSB3aWxsIHVzZSB0aGUgc3FsZGYgcGFja2FnZSB0byBwcmFjdGljZSB0aGUgcXVlcmllcyB3ZSBtaWdodCBzZW5kIHdpdGggdGhlIGRiU2VuZFF1ZXJ5IGNvbW1hbmQgaW4gUk15U1FMLg0KDQpEb3dubG9hZCB0aGUgQW1lcmljYW4gQ29tbXVuaXR5IFN1cnZleSBkYXRhIGFuZCBsb2FkIGl0IGludG8gYW4gUiBvYmplY3QgY2FsbGVkDQoNCmBgYHtyfQ0KYWNzDQpgYGANCg0KDQpodHRwczovL2QzOTZxdXN6YTQwb3JjLmNsb3VkZnJvbnQubmV0L2dldGRhdGElMkZkYXRhJTJGc3MwNnBpZC5jc3YNCg0KV2hpY2ggb2YgdGhlIGZvbGxvd2luZyBjb21tYW5kcyB3aWxsIHNlbGVjdCBvbmx5IHRoZSBkYXRhIGZvciB0aGUgcHJvYmFiaWxpdHkgd2VpZ2h0cyBwd2d0cDEgd2l0aCBhZ2VzIGxlc3MgdGhhbiA1MD8NCg0KDQpgYGB7cn0NCiMgaW5zdGFsbC5wYWNrYWdlcygic3FsZGYiKQ0KbGlicmFyeSgic3FsZGYiKQ0KDQp1cmwgPC0gImh0dHBzOi8vZDM5NnF1c3phNDBvcmMuY2xvdWRmcm9udC5uZXQvZ2V0ZGF0YSUyRmRhdGElMkZzczA2cGlkLmNzdiINCmYgPC0gZmlsZS5wYXRoKGdldHdkKCksICJzczA2cGlkLmNzdiIpDQpkb3dubG9hZC5maWxlKHVybCwgZikNCmFjcyA8LSBkYXRhLnRhYmxlOjpkYXRhLnRhYmxlKHJlYWQuY3N2KGYpKQ0KYGBgDQpBbnN3ZXI6DQpxdWVyeTEgPC0gc3FsZGYoInNlbGVjdCBwd2d0cDEgZnJvbSBhY3Mgd2hlcmUgQUdFUCA8IDUwIikNCg0KUXVlc3Rpb24gMzoNCg0KVXNpbmcgdGhlIHNhbWUgZGF0YSBmcmFtZSB5b3UgY3JlYXRlZCBpbiB0aGUgcHJldmlvdXMgcHJvYmxlbSwgd2hhdCBpcyB0aGUgZXF1aXZhbGVudCBmdW5jdGlvbiB0byB1bmlxdWUoYWNzJEFHRVApDQoNCkFuc3dlcjoNCmBgYHtyfQ0Kc3FsZGYoInNlbGVjdCBkaXN0aW5jdCBBR0VQIGZyb20gYWNzIikNCmBgYA0KDQpRdWVzdGlvbiA0Og0KDQpIb3cgbWFueSBjaGFyYWN0ZXJzIGFyZSBpbiB0aGUgMTB0aCwgMjB0aCwgMzB0aCBhbmQgMTAwdGggbGluZXMgb2YgSFRNTCBmcm9tIHRoaXMgcGFnZToNCg0KaHR0cDovL2Jpb3N0YXQuamhzcGguZWR1L35qbGVlay9jb250YWN0Lmh0bWwNCg0KKEhpbnQ6IHRoZSBuY2hhcigpIGZ1bmN0aW9uIGluIFIgbWF5IGJlIGhlbHBmdWwpDQoNCkFuc3dlcjoNCmBgYHtyfQ0KdXJsIDwtIHVybCgiaHR0cDovL2Jpb3N0YXQuamhzcGguZWR1L35qbGVlay9jb250YWN0Lmh0bWwiKQ0KaHRtbENvZGUgPC0gcmVhZExpbmVzKHVybCkNCmNsb3NlKHVybCkNCmMobmNoYXIoaHRtbENvZGVbMTBdKSwgbmNoYXIoaHRtbENvZGVbMjBdKSwgbmNoYXIoaHRtbENvZGVbMzBdKSwgbmNoYXIoaHRtbENvZGVbMTAwXSkpDQpgYGANCkFuc3dlcjogNDUgMzEgIDcgMjUNCg0KUXVlc3Rpb24gNToNCg0KUmVhZCB0aGlzIGRhdGEgc2V0IGludG8gUiBhbmQgcmVwb3J0IHRoZSBzdW0gb2YgdGhlIG51bWJlcnMgaW4gdGhlIGZvdXJ0aCBvZiB0aGUgbmluZSBjb2x1bW5zLg0KDQpodHRwczovL2QzOTZxdXN6YTQwb3JjLmNsb3VkZnJvbnQubmV0L2dldGRhdGElMkZ3a3NzdDgxMTAuZm9yDQoNCk9yaWdpbmFsIHNvdXJjZSBvZiB0aGUgZGF0YTogaHR0cDovL3d3dy5jcGMubmNlcC5ub2FhLmdvdi9kYXRhL2luZGljZXMvd2tzc3Q4MTEwLmZvcg0KDQooSGludCB0aGlzIGlzIGEgZml4ZWQgd2lkdGggZmlsZSBmb3JtYXQpDQoNCkNvZGU6DQpgYGB7cn0NCnVybCA8LSAiaHR0cHM6Ly9kMzk2cXVzemE0MG9yYy5jbG91ZGZyb250Lm5ldC9nZXRkYXRhJTJGd2tzc3Q4MTEwLmZvciINCmxpbmVzIDwtIHJlYWRMaW5lcyh1cmwsIG4gPSAxMCkNCncgPC0gYygxLCA5LCA1LCA0LCAxLCAzLCA1LCA0LCAxLCAzLCA1LCA0LCAxLCAzLCA1LCA0LCAxLCAzKQ0KY29sTmFtZXMgPC0gYygiZmlsbGVyIiwgIndlZWsiLCAiZmlsbGVyIiwgInNzdE5pbm8xMiIsICJmaWxsZXIiLCAic3N0YU5pbm8xMiIsIA0KICAgICAgICAgICAgICAiZmlsbGVyIiwgInNzdE5pbm8zIiwgImZpbGxlciIsICJzc3RhTmlubzMiLCAiZmlsbGVyIiwgInNzdE5pbm8zNCIsICJmaWxsZXIiLCANCiAgICAgICAgICAgICAgInNzdGFOaW5vMzQiLCAiZmlsbGVyIiwgInNzdE5pbm80IiwgImZpbGxlciIsICJzc3RhTmlubzQiKQ0KZCA8LSByZWFkLmZ3Zih1cmwsIHcsIGhlYWRlciA9IEZBTFNFLCBza2lwID0gNCwgY29sLm5hbWVzID0gY29sTmFtZXMpDQpkIDwtIGRbLCBncmVwKCJeW15maWxsZXJdIiwgbmFtZXMoZCkpXQ0Kc3VtKGRbLCA0XSkNCg0KYGBgDQoNCkFuc3dlcjoNCg==</div>
 
 
 
